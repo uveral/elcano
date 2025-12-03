@@ -1,4 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { GlobalWorkerOptions, getDocument } from 'pdfjs-dist'
+import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
 import { supabase } from './supabaseClient'
 import logo from './assets/armada-logo.png'
 import './App.css'
@@ -81,12 +83,14 @@ const dassQuestions: Question[] = [
   { id: 'dass21', text: 'En el último mes, sentí que la vida no tenía ningún sentido' },
 ] as const
 
+GlobalWorkerOptions.workerSrc = pdfjsWorker
+
 const manualLinks: ManualLink[] = [
   { id: 'general', title: 'Manual General', href: '', note: 'Disponible próximamente' },
   { id: 'breve', title: 'Manual Breve', href: 'https://github.com/uveral/elcano/releases/download/manual/Breve.pdf' },
   { id: 'parejas', title: 'Manual Parejas', href: 'https://github.com/uveral/elcano/releases/download/manual/Parejas.pdf' },
-  { id: 'ninos', title: 'Manual Niños', href: '', note: 'Disponible próximamente' },
-  { id: 'suicidio', title: 'Manual Suicidio', href: '', note: 'Disponible próximamente' },
+  { id: 'ninos', title: 'Manual Niños', href: 'https://github.com/uveral/elcano/releases/download/manual/Ninos.pdf' },
+  { id: 'suicidio', title: 'Manual Suicidio', href: 'https://github.com/uveral/elcano/releases/download/manual/Suicidio.pdf' },
 ] as const
 
 const buildEmptyAnswers = (questions: Question[]) =>
@@ -158,6 +162,51 @@ const computeDassScores = (answers: Record<string, number | null>) => {
     ansiedad: { puntuacion: scores.ansiedad, severidad: categorize('ansiedad') },
     estres: { puntuacion: scores.estres, severidad: categorize('estres') },
   }
+}
+
+const ManualCard = ({ manual }: { manual: ManualLink }) => {
+  const [thumb, setThumb] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!manual.href) return
+
+    const load = async () => {
+      try {
+        const pdf = await getDocument(manual.href).promise
+        const page = await pdf.getPage(1)
+        const viewport = page.getViewport({ scale: 0.3 })
+        const canvas = document.createElement('canvas')
+        const context = canvas.getContext('2d')
+        if (!context) return
+        canvas.height = viewport.height
+        canvas.width = viewport.width
+        await page.render({ canvasContext: context, viewport, canvas }).promise
+        setThumb(canvas.toDataURL('image/png'))
+      } catch (err) {
+        setThumb(null)
+      }
+    }
+
+    load()
+  }, [manual.href])
+
+  return (
+    <a
+      href={manual.href || '#'}
+      className={`manual-card ${!manual.href ? 'disabled' : ''}`}
+      download={Boolean(manual.href)}
+      target={manual.href ? '_blank' : undefined}
+      rel="noreferrer"
+    >
+      <div className="manual-thumb">
+        {thumb ? <img src={thumb} alt={manual.title} /> : <img src={logo} alt={manual.title} />}
+      </div>
+      <div className="manual-info">
+        <span>{manual.title}</span>
+        {!manual.href && <small>{manual.note}</small>}
+      </div>
+    </a>
+  )
 }
 
 function App() {
@@ -276,22 +325,7 @@ function App() {
         <span>Descarga de manuales en PDF:</span>
         <div className="manual-links">
           {manualLinks.map((manual) => (
-            <a
-              key={manual.id}
-              href={manual.href || '#'}
-              className={`manual-card ${!manual.href ? 'disabled' : ''}`}
-              download={Boolean(manual.href)}
-              target={manual.href ? '_blank' : undefined}
-              rel="noreferrer"
-            >
-              <div className="manual-thumb">
-                <img src={logo} alt={manual.title} />
-              </div>
-              <div className="manual-info">
-                <span>{manual.title}</span>
-                {!manual.href && <small>{manual.note}</small>}
-              </div>
-            </a>
+            <ManualCard key={manual.id} manual={manual} />
           ))}
         </div>
       </div>
@@ -531,31 +565,16 @@ function App() {
     </div>
   )
 
-  const renderCompleted = () => (
-    <div className="panel">
-      <div className="badge">Enviado</div>
-      <h1>Gracias por tu tiempo</h1>
-      <p className="lead">Tus respuestas se han guardado como borrador. Puedes cerrar esta ventana con seguridad.</p>
+const renderCompleted = () => (
+  <div className="panel">
+    <div className="badge">Enviado</div>
+    <h1>Gracias por tu tiempo</h1>
+    <p className="lead">Tus respuestas se han guardado como borrador. Puedes cerrar esta ventana con seguridad.</p>
       <div className="manuals">
         <span>Manual de apoyo (PDF):</span>
         <div className="manual-links">
           {manualLinks.map((manual) => (
-            <a
-              key={manual.id}
-              href={manual.href || '#'}
-              className={`manual-card ${!manual.href ? 'disabled' : ''}`}
-              download={Boolean(manual.href)}
-              target={manual.href ? '_blank' : undefined}
-              rel="noreferrer"
-            >
-              <div className="manual-thumb">
-                <img src={logo} alt={manual.title} />
-              </div>
-              <div className="manual-info">
-                <span>{manual.title}</span>
-                {!manual.href && <small>{manual.note}</small>}
-              </div>
-            </a>
+            <ManualCard key={manual.id} manual={manual} />
           ))}
         </div>
       </div>
