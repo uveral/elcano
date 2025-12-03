@@ -241,7 +241,7 @@ function App() {
   const dassScores = useMemo(() => computeDassScores(dassAnswers), [dassAnswers])
   const contactValid = !contactOptIn || [contactName, contactPhone, contactEmail].some((v) => v.trim() !== '')
 
-  const handleSubmit = async () => {
+const handleSubmit = async () => {
     setSubmitError(null)
     setSubmitOk(false)
 
@@ -255,7 +255,6 @@ function App() {
       status: 'draft',
       scale,
       destination,
-      birth_date: birthDay || null,
       identifier,
       pss_responses: pssQuestions.map((q) => ({ id: q.id, text: q.text, value: pssAnswers[q.id] })),
       pss_score: pssScore,
