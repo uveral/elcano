@@ -4,7 +4,7 @@ import logo from './assets/armada-logo.png'
 import './App.css'
 
 type Stage = 'privacy' | 'demographics' | 'pss' | 'dass' | 'review' | 'completed'
-type Scale = 'oficial' | 'suboficial' | 'tropa'
+type Scale = 'oficial' | 'suboficial' | 'tropa' | 'guardiamarina'
 type Severity = 'Normal' | 'Suave' | 'Moderado' | 'Grave' | 'Extremadamente severo'
 
 type Question = {
@@ -76,8 +76,8 @@ const dassQuestions: Question[] = [
 
 const manualLinks = [
   { id: 'general', title: 'Manual General', href: '', note: 'Disponible próximamente' },
-  { id: 'breve', title: 'Manual Breve', href: '', note: 'Disponible próximamente' },
-  { id: 'parejas', title: 'Manual Parejas', href: '', note: 'Disponible próximamente' },
+  { id: 'breve', title: 'Manual Breve', href: 'https://github.com/uveral/elcano/releases/download/manual/Breve.pdf' },
+  { id: 'parejas', title: 'Manual Parejas', href: 'https://github.com/uveral/elcano/releases/download/manual/Parejas.pdf' },
   { id: 'ninos', title: 'Manual Niños', href: '', note: 'Disponible próximamente' },
   { id: 'suicidio', title: 'Manual Suicidio', href: '', note: 'Disponible próximamente' },
 ] as const
@@ -313,6 +313,7 @@ function App() {
             <option value="oficial">Oficiales</option>
             <option value="suboficial">Suboficiales</option>
             <option value="tropa">Tropa</option>
+            <option value="guardiamarina">Guardiamarina</option>
           </select>
         </label>
         <label className="field">
@@ -324,6 +325,7 @@ function App() {
             <option value="maquinas">Máquinas</option>
             <option value="jefatura de estudios">Jefatura de estudios</option>
             <option value="sanidad">Sanidad</option>
+            <option value="alumno enm">Alumno ENM</option>
           </select>
         </label>
         <label className="field">
