@@ -196,7 +196,9 @@ function App() {
     setSubmitOk(false)
 
     if (!supabaseReady) {
-      setSubmitError('Configura las variables VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY para poder enviar los datos.')
+      setSubmitError(
+        'Configura las variables SUPABASE_URL y SUPABASE_ANON_KEY (o VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY) para poder enviar los datos.',
+      )
       return
     }
 
