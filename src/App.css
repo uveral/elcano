@@ -43,6 +43,11 @@
   letter-spacing: 0.5px;
 }
 
+.ship-mark {
+  height: 48px;
+  object-fit: contain;
+}
+
 main {
   flex: 1;
   display: grid;

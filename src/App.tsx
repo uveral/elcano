@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { supabase } from './supabaseClient'
 import logo from './assets/armada-logo.png'
+import ship from './assets/elcano.png'
 import './App.css'
 
 type Stage = 'privacy' | 'demographics' | 'pss' | 'dass' | 'review' | 'completed'
@@ -577,6 +578,7 @@ const handleSubmit = async () => {
             <strong>B.E. Juan Sebastián ElCano</strong>
           </div>
         </div>
+        <img src={ship} alt="Elcano" className="ship-mark" />
       </header>
       <main>
         {stage === 'privacy' && renderPrivacy()}
