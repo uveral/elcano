@@ -288,7 +288,7 @@ const handleSubmit = async () => {
       </p>
       <ul className="list">
         <li>Cumplimiento RGPD/Ley Orgánica de Protección de Datos: no se recogen datos identificativos directos.</li>
-        <li>Identificación seudónima: identificador = día + últimos 3 dígitos del móvil + inicial del segundo apellido del padre y de la madre.</li>
+        <li>Identificación seudónima: identificador = día de nacimiento + últimos 3 dígitos del móvil + inicial del segundo apellido del padre y de la madre.</li>
         <li>Transmisión segura: las respuestas viajan cifradas vía HTTPS/SSL hacia una base de datos segura y cifrada.</li>
         <li>Acceso restringido: solo personal autorizado del servicio de psicología puede consultar estos datos.</li>
         <li>Derechos: puedes solicitar acceso, rectificación o supresión a través del servicio de psicología.</li>
@@ -369,7 +369,7 @@ const handleSubmit = async () => {
       <div className="identifier">
         <span>Identificador generado</span>
         <strong>{identifier || 'Pendiente (rellena los campos)'}</strong>
-        <small>Día + últimos 3 dígitos del móvil + inicial apellido 2º padre + inicial apellido 2º madre</small>
+        <small>Día de nacimiento + últimos 3 dígitos del móvil + inicial apellido 2º padre + inicial apellido 2º madre</small>
       </div>
       <div className="actions">
         <button onClick={() => setStage('privacy')}>Atrás</button>
