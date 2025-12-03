@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { supabase } from './supabaseClient'
+import logo from './assets/armada-logo.png'
 import './App.css'
 
 type Stage = 'privacy' | 'demographics' | 'pss' | 'dass' | 'review' | 'completed'
@@ -492,7 +493,7 @@ function App() {
     <div className="app">
       <header className="topbar">
         <div className="brand">
-          <span className="dot" />
+          <img src={logo} alt="Armada Española" className="brand-logo" />
           <div>
             <strong>Proyecto Elcano</strong>
             <small>PSS-14 + DASS-21</small>

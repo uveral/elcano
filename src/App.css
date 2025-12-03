@@ -1,7 +1,15 @@
+:root {
+  --armada-blue: #173763;
+  --armada-gray: #c7c7c7;
+  --armada-white: #ffffff;
+  --armada-ink: #0b1b2f;
+  --armada-accent: #1f4f86;
+}
+
 .app {
   min-height: 100vh;
-  background: radial-gradient(circle at 20% 20%, #f7f1ff, #eef2ff 30%, #f7f9fb 70%);
-  color: #0f172a;
+  background: radial-gradient(circle at 12% 20%, #e7edf5, #d7dfea 35%, #f6f7f9 70%);
+  color: var(--armada-ink);
   display: flex;
   flex-direction: column;
 }
@@ -10,9 +18,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px clamp(16px, 3vw, 32px);
-  border-bottom: 1px solid #e2e8f0;
-  backdrop-filter: blur(10px);
+  padding: 16px clamp(16px, 3vw, 32px);
+  background: var(--armada-blue);
+  color: var(--armada-white);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
 }
 
 .brand {
@@ -22,26 +31,24 @@
   font-size: 14px;
 }
 
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
 .brand strong {
   display: block;
   font-size: 16px;
 }
 
 .brand small {
-  color: #475569;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1, #22c55e);
-  box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.15);
+  color: #e2e8f0;
 }
 
 .meta {
   font-size: 14px;
-  color: #475569;
+  color: #e2e8f0;
 }
 
 main {
@@ -52,13 +59,14 @@ main {
 }
 
 .panel {
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+  background: var(--armada-white);
+  border-radius: 18px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
   padding: clamp(18px, 4vw, 32px);
   width: min(900px, 100%);
   display: grid;
   gap: 16px;
+  border: 1px solid #e5e7eb;
 }
 
 .badge {
@@ -66,10 +74,10 @@ main {
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
-  background: #f5f3ff;
-  color: #5b21b6;
+  background: rgba(23, 55, 99, 0.1);
+  color: var(--armada-blue);
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 700;
   width: fit-content;
 }
 
@@ -80,7 +88,7 @@ h1 {
 
 .lead {
   margin: 0;
-  color: #475569;
+  color: #334155;
   line-height: 1.6;
 }
 
@@ -97,7 +105,7 @@ h1 {
   gap: 10px;
   align-items: flex-start;
   font-weight: 600;
-  color: #111827;
+  color: #0f172a;
 }
 
 .checkbox input {
@@ -119,7 +127,7 @@ h1 {
 
 .field input,
 .field select {
-  border: 1px solid #e2e8f0;
+  border: 1px solid #d7dfe8;
   border-radius: 12px;
   padding: 12px 14px;
   font-size: 15px;
@@ -130,9 +138,9 @@ h1 {
 .field input:focus,
 .field select:focus {
   outline: none;
-  border-color: #6366f1;
+  border-color: var(--armada-blue);
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 3px rgba(23, 55, 99, 0.15);
 }
 
 .identifier {
@@ -154,7 +162,7 @@ h1 {
 
 .progress {
   width: 100%;
-  background: #f1f5f9;
+  background: #e2e8f0;
   border-radius: 12px;
   height: 8px;
   overflow: hidden;
@@ -162,7 +170,7 @@ h1 {
 
 .progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #6366f1, #22c55e);
+  background: linear-gradient(90deg, var(--armada-blue), var(--armada-accent));
   transition: width 0.3s ease;
 }
 
@@ -180,7 +188,7 @@ h1 {
   padding: 14px 16px;
   background: #f8fafc;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
 .option:hover {
@@ -189,9 +197,9 @@ h1 {
 }
 
 .option.selected {
-  border-color: #6366f1;
-  background: #eef2ff;
-  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.18);
+  border-color: var(--armada-blue);
+  background: rgba(23, 55, 99, 0.08);
+  box-shadow: 0 12px 30px rgba(23, 55, 99, 0.15);
 }
 
 .option-label {
@@ -235,7 +243,7 @@ button:disabled {
 }
 
 .primary {
-  background: linear-gradient(135deg, #6366f1, #22c55e);
+  background: var(--armada-blue);
   color: #fff;
 }
 
@@ -284,6 +292,7 @@ button:disabled {
   border-top: 1px solid #e2e8f0;
   font-size: 14px;
   color: #475569;
+  background: #f1f5f9;
 }
 
 .status-ok {
