@@ -151,7 +151,7 @@ function App() {
   const [scale, setScale] = useState<Scale | ''>('')
   const [fatherCity, setFatherCity] = useState('')
   const [motherCity, setMotherCity] = useState('')
-  const [birthDate, setBirthDate] = useState('')
+  const [birthDay, setBirthDay] = useState('')
 
   const [pssAnswers, setPssAnswers] = useState<Record<string, number | null>>(buildEmptyAnswers(pssQuestions))
   const [dassAnswers, setDassAnswers] = useState<Record<string, number | null>>(buildEmptyAnswers(dassQuestions))
@@ -168,14 +168,15 @@ function App() {
   const identifier = useMemo(() => {
     const father = fatherCity.trim().charAt(0).toUpperCase()
     const mother = motherCity.trim().charAt(0).toUpperCase()
-    const day = birthDate ? new Date(birthDate).getDate().toString().padStart(2, '0') : ''
+    const day = birthDay ? Number(birthDay).toString().padStart(2, '0') : ''
     return father || mother || day ? `${father}${mother}${day}` : ''
-  }, [fatherCity, motherCity, birthDate])
+  }, [fatherCity, motherCity, birthDay])
 
   const pssCompletedCount = useMemo(() => Object.values(pssAnswers).filter((v) => v !== null).length, [pssAnswers])
   const dassCompletedCount = useMemo(() => Object.values(dassAnswers).filter((v) => v !== null).length, [dassAnswers])
 
-  const demographicsValid = consentAccepted && scale !== '' && fatherCity.trim() !== '' && motherCity.trim() !== '' && birthDate !== ''
+  const demographicsValid =
+    consentAccepted && scale !== '' && fatherCity.trim() !== '' && motherCity.trim() !== '' && birthDay !== ''
 
   const handleAnswerPss = (id: string, value: number) => {
     setPssAnswers((prev) => ({ ...prev, [id]: value }))
@@ -190,7 +191,7 @@ function App() {
   const supabaseReady = Boolean(supabase)
   const pssScore = useMemo(() => computePssScore(pssAnswers), [pssAnswers])
   const dassScores = useMemo(() => computeDassScores(dassAnswers), [dassAnswers])
-  const contactValid = !contactOptIn || (contactName.trim() !== '' && contactPhone.trim() !== '' && contactEmail.trim() !== '')
+  const contactValid = !contactOptIn || [contactName, contactPhone, contactEmail].some((v) => v.trim() !== '')
 
   const handleSubmit = async () => {
     setSubmitError(null)
@@ -209,7 +210,7 @@ function App() {
       scale,
       father_city: fatherCity.trim(),
       mother_city: motherCity.trim(),
-      birth_date: birthDate,
+      birth_date: birthDay || null,
       identifier,
       pss_responses: pssQuestions.map((q) => ({ id: q.id, text: q.text, value: pssAnswers[q.id] })),
       pss_score: pssScore,
@@ -283,8 +284,15 @@ function App() {
           <input value={motherCity} onChange={(e) => setMotherCity(e.target.value)} placeholder="Ej. Bilbao" />
         </label>
         <label className="field">
-          <span>Fecha de nacimiento</span>
-          <input type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
+          <span>Día de nacimiento</span>
+          <input
+            type="number"
+            min="1"
+            max="31"
+            value={birthDay}
+            onChange={(e) => setBirthDay(e.target.value)}
+            placeholder="Ej. 07"
+          />
         </label>
       </div>
       <div className="identifier">
@@ -415,12 +423,6 @@ function App() {
           <span>PSS-14 contestadas:</span>
           <strong>{pssCompletedCount}/{pssQuestions.length}</strong>
         </div>
-        {pssScore && (
-          <div>
-            <span>PSS-14 puntuación total:</span>
-            <strong>{pssScore.total}</strong>
-          </div>
-        )}
         <div>
           <span>Solicitud de contacto:</span>
           <strong>{contactOptIn ? 'Sí' : 'No'}</strong>
@@ -429,22 +431,6 @@ function App() {
           <span>DASS-21 contestadas:</span>
           <strong>{dassCompletedCount}/{dassQuestions.length}</strong>
         </div>
-        {dassScores && (
-          <>
-            <div>
-              <span>Depresión:</span>
-              <strong>{dassScores.depresion.puntuacion} ({dassScores.depresion.severidad})</strong>
-            </div>
-            <div>
-              <span>Ansiedad:</span>
-              <strong>{dassScores.ansiedad.puntuacion} ({dassScores.ansiedad.severidad})</strong>
-            </div>
-            <div>
-              <span>Estrés:</span>
-              <strong>{dassScores.estres.puntuacion} ({dassScores.estres.severidad})</strong>
-            </div>
-          </>
-        )}
       </div>
       <div className="contact-block">
         <label className="checkbox">
@@ -467,7 +453,7 @@ function App() {
             </label>
           </div>
         )}
-        {contactOptIn && !contactValid && <p className="warning">Introduce nombre, teléfono y correo para poder contactar.</p>}
+        {contactOptIn && !contactValid && <p className="warning">Introduce al menos un dato de contacto.</p>}
       </div>
       {!supabaseReady && <p className="warning">Configura las variables de entorno para habilitar el envío a Supabase.</p>}
       {submitError && <p className="error">{submitError}</p>}
@@ -495,12 +481,8 @@ function App() {
         <div className="brand">
           <img src={logo} alt="Armada Española" className="brand-logo" />
           <div>
-            <strong>Proyecto Elcano</strong>
-            <small>PSS-14 + DASS-21</small>
+            <strong>B.E. Juan Sebastián ElCano</strong>
           </div>
-        </div>
-        <div className="meta">
-          <span>Modo: móvil pregunta a pregunta</span>
         </div>
       </header>
       <main>
@@ -511,12 +493,6 @@ function App() {
         {stage === 'review' && renderReview()}
         {stage === 'completed' && renderCompleted()}
       </main>
-      <footer className="footer">
-        <span>Puntos de guardado: Datos → PSS-14 → DASS-21 → Envío</span>
-        <span className={allPssAnswered && allDassAnswered && demographicsValid ? 'status-ok' : 'status-warn'}>
-          {allPssAnswered && allDassAnswered && demographicsValid ? 'Listo para enviar' : 'Quedan pasos por completar'}
-        </span>
-      </footer>
     </div>
   )
 }
