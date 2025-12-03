@@ -74,6 +74,14 @@ const dassQuestions: Question[] = [
   { id: 'dass21', text: 'Sentí que la vida no tenía ningún sentido' },
 ]
 
+const manualLinks = [
+  { id: 'general', title: 'Manual General', href: '', note: 'Disponible próximamente' },
+  { id: 'breve', title: 'Manual Breve', href: '', note: 'Disponible próximamente' },
+  { id: 'parejas', title: 'Manual Parejas', href: '', note: 'Disponible próximamente' },
+  { id: 'ninos', title: 'Manual Niños', href: '', note: 'Disponible próximamente' },
+  { id: 'suicidio', title: 'Manual Suicidio', href: '', note: 'Disponible próximamente' },
+] as const
+
 const buildEmptyAnswers = (questions: Question[]) =>
   questions.reduce<Record<string, number | null>>((acc, q) => ({ ...acc, [q.id]: null }), {})
 
@@ -149,6 +157,7 @@ function App() {
   const [stage, setStage] = useState<Stage>('privacy')
   const [consentAccepted, setConsentAccepted] = useState(false)
   const [scale, setScale] = useState<Scale | ''>('')
+  const [destination, setDestination] = useState('')
   const [fatherCity, setFatherCity] = useState('')
   const [motherCity, setMotherCity] = useState('')
   const [birthDay, setBirthDay] = useState('')
@@ -176,7 +185,12 @@ function App() {
   const dassCompletedCount = useMemo(() => Object.values(dassAnswers).filter((v) => v !== null).length, [dassAnswers])
 
   const demographicsValid =
-    consentAccepted && scale !== '' && fatherCity.trim() !== '' && motherCity.trim() !== '' && birthDay !== ''
+    consentAccepted &&
+    scale !== '' &&
+    destination !== '' &&
+    fatherCity.trim() !== '' &&
+    motherCity.trim() !== '' &&
+    birthDay !== ''
 
   const handleAnswerPss = (id: string, value: number) => {
     setPssAnswers((prev) => ({ ...prev, [id]: value }))
@@ -199,7 +213,7 @@ function App() {
 
     if (!supabaseReady) {
       setSubmitError(
-        'Configura las variables SUPABASE_URL y SUPABASE_ANON_KEY (o VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY) para poder enviar los datos.',
+        'Configura las variables de conexión (URL y clave) para poder enviar los datos.',
       )
       return
     }
@@ -208,6 +222,7 @@ function App() {
     const payload = {
       status: 'draft',
       scale,
+      destination,
       father_city: fatherCity.trim(),
       mother_city: motherCity.trim(),
       birth_date: birthDay || null,
@@ -240,17 +255,34 @@ function App() {
       <div className="badge">Aviso de privacidad</div>
       <h1>Protección de datos</h1>
       <p className="lead">
-        Tus respuestas son confidenciales y se emplearán únicamente para fines de investigación y mejora operativa. Se
-        almacenarán de forma seudonimizada en Supabase (entorno seguro) y solo personal autorizado podrá acceder a ellas.
+        Tus respuestas son confidenciales y se emplearán únicamente para fines de investigación y mejora operativa, con base jurídica en tu consentimiento.
       </p>
       <ul className="list">
         <li>Cumplimiento RGPD/Ley Orgánica de Protección de Datos: no se recogen datos identificativos directos.</li>
         <li>Identificación seudónima: se genera un identificador (iniciales ciudades progenitores + día de nacimiento).</li>
-        <li>Transmisión segura: las respuestas viajan cifradas vía HTTPS/SSL hacia una base de datos cifrada en Supabase.</li>
+        <li>Transmisión segura: las respuestas viajan cifradas vía HTTPS/SSL hacia una base de datos segura y cifrada.</li>
         <li>Acceso restringido: solo personal autorizado del servicio de psicología puede consultar estos datos.</li>
         <li>Derechos: puedes solicitar acceso, rectificación o supresión a través del servicio de psicología.</li>
         <li>Puedes abandonar el cuestionario en cualquier momento; los resultados se guardarán inicialmente como borrador.</li>
       </ul>
+      <div className="manuals">
+        <span>Descarga de manuales en PDF:</span>
+        <div className="manual-links">
+          {manualLinks.map((manual) => (
+            <a
+              key={manual.id}
+              href={manual.href || '#'}
+              className={!manual.href ? 'disabled' : ''}
+              download={Boolean(manual.href)}
+              target={manual.href ? '_blank' : undefined}
+              rel="noreferrer"
+            >
+              {manual.title}
+              {!manual.href && <small> — {manual.note}</small>}
+            </a>
+          ))}
+        </div>
+      </div>
       <label className="checkbox">
         <input type="checkbox" checked={consentAccepted} onChange={(e) => setConsentAccepted(e.target.checked)} />
         <span>Acepto el aviso de privacidad y deseo continuar.</span>
@@ -276,6 +308,17 @@ function App() {
             <option value="oficial">Oficiales</option>
             <option value="suboficial">Suboficiales</option>
             <option value="tropa">Tropa</option>
+          </select>
+        </label>
+        <label className="field">
+          <span>Destino</span>
+          <select value={destination} onChange={(e) => setDestination(e.target.value)}>
+            <option value="">Selecciona una opción</option>
+            <option value="control de buque">Control de buque</option>
+            <option value="aprovisionamiento">Aprovisionamiento</option>
+            <option value="maquinas">Máquinas</option>
+            <option value="jefatura de estudios">Jefatura de estudios</option>
+            <option value="sanidad">Sanidad</option>
           </select>
         </label>
         <label className="field">
@@ -419,6 +462,10 @@ function App() {
           <strong>{scale}</strong>
         </div>
         <div>
+          <span>Destino:</span>
+          <strong>{destination || 'No indicado'}</strong>
+        </div>
+        <div>
           <span>Identificador:</span>
           <strong>{identifier || 'No generado'}</strong>
         </div>
@@ -475,6 +522,24 @@ function App() {
       <div className="badge">Enviado</div>
       <h1>Gracias por tu tiempo</h1>
       <p className="lead">Tus respuestas se han guardado como borrador. Puedes cerrar esta ventana con seguridad.</p>
+      <div className="manuals">
+        <span>Manual de apoyo (PDF):</span>
+        <div className="manual-links">
+          {manualLinks.map((manual) => (
+            <a
+              key={manual.id}
+              href={manual.href || '#'}
+              className={!manual.href ? 'disabled' : ''}
+              download={Boolean(manual.href)}
+              target={manual.href ? '_blank' : undefined}
+              rel="noreferrer"
+            >
+              {manual.title}
+              {!manual.href && <small> — {manual.note}</small>}
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   )
 
