@@ -86,7 +86,7 @@ const dassQuestions: Question[] = [
 GlobalWorkerOptions.workerSrc = pdfjsWorker
 
 const manualLinks: ManualLink[] = [
-  { id: 'general', title: 'Manual General', href: '', note: 'Disponible próximamente' },
+  { id: 'general', title: 'Manual General', href: 'https://github.com/uveral/elcano/releases/download/manual/General.pdf' },
   { id: 'breve', title: 'Manual Breve', href: 'https://github.com/uveral/elcano/releases/download/manual/Breve.pdf' },
   { id: 'parejas', title: 'Manual Parejas', href: 'https://github.com/uveral/elcano/releases/download/manual/Parejas.pdf' },
   { id: 'ninos', title: 'Manual Niños', href: 'https://github.com/uveral/elcano/releases/download/manual/Ninos.pdf' },
@@ -216,7 +216,10 @@ function App() {
   const [destination, setDestination] = useState('')
   const [fatherCity, setFatherCity] = useState('')
   const [motherCity, setMotherCity] = useState('')
+  const [fatherSecondSurname, setFatherSecondSurname] = useState('')
+  const [motherSecondSurname, setMotherSecondSurname] = useState('')
   const [birthDay, setBirthDay] = useState('')
+  const [mobilePhone, setMobilePhone] = useState('')
 
   const [pssAnswers, setPssAnswers] = useState<Record<string, number | null>>(buildEmptyAnswers(pssQuestions))
   const [dassAnswers, setDassAnswers] = useState<Record<string, number | null>>(buildEmptyAnswers(dassQuestions))
@@ -231,11 +234,15 @@ function App() {
   const [submitOk, setSubmitOk] = useState(false)
 
   const identifier = useMemo(() => {
-    const father = fatherCity.trim().charAt(0).toUpperCase()
-    const mother = motherCity.trim().charAt(0).toUpperCase()
+    const fatherLetter = fatherSecondSurname.trim().charAt(0).toUpperCase()
+    const motherLetter = motherSecondSurname.trim().charAt(0).toUpperCase()
     const day = birthDay ? Number(birthDay).toString().padStart(2, '0') : ''
-    return father || mother || day ? `${father}${mother}${day}` : ''
-  }, [fatherCity, motherCity, birthDay])
+    const phoneDigits = mobilePhone.replace(/\D/g, '')
+    const last3 = phoneDigits.slice(-3)
+    const numbers = `${day}${last3}`
+    const letters = `${fatherLetter}${motherLetter}`
+    return numbers || letters ? `${numbers}${letters}` : ''
+  }, [fatherSecondSurname, motherSecondSurname, birthDay, mobilePhone])
 
   const pssCompletedCount = useMemo(() => Object.values(pssAnswers).filter((v) => v !== null).length, [pssAnswers])
   const dassCompletedCount = useMemo(() => Object.values(dassAnswers).filter((v) => v !== null).length, [dassAnswers])
@@ -246,7 +253,10 @@ function App() {
     destination !== '' &&
     fatherCity.trim() !== '' &&
     motherCity.trim() !== '' &&
-    birthDay !== ''
+    fatherSecondSurname.trim() !== '' &&
+    motherSecondSurname.trim() !== '' &&
+    birthDay !== '' &&
+    mobilePhone.trim() !== ''
 
   const handleAnswerPss = (id: string, value: number) => {
     setPssAnswers((prev) => ({ ...prev, [id]: value }))
@@ -281,7 +291,10 @@ function App() {
       destination,
       father_city: fatherCity.trim(),
       mother_city: motherCity.trim(),
+      father_second_surname: fatherSecondSurname.trim(),
+      mother_second_surname: motherSecondSurname.trim(),
       birth_date: birthDay || null,
+      mobile_phone: mobilePhone.trim(),
       identifier,
       pss_responses: pssQuestions.map((q) => ({ id: q.id, text: q.text, value: pssAnswers[q.id] })),
       pss_score: pssScore,
@@ -315,7 +328,7 @@ function App() {
       </p>
       <ul className="list">
         <li>Cumplimiento RGPD/Ley OrgÃ¡nica de ProtecciÃ³n de Datos: no se recogen datos identificativos directos.</li>
-        <li>IdentificaciÃ³n seudÃ³nima: se genera un identificador (iniciales ciudades progenitores + dÃ­a de nacimiento).</li>
+        <li>Identificación seudónima: se genera un identificador (día + últimos 3 dígitos del móvil + inicial segundo apellido padre y madre).</li>
         <li>TransmisiÃ³n segura: las respuestas viajan cifradas vÃ­a HTTPS/SSL hacia una base de datos segura y cifrada.</li>
         <li>Acceso restringido: solo personal autorizado del servicio de psicologÃ­a puede consultar estos datos.</li>
         <li>Derechos: puedes solicitar acceso, rectificaciÃ³n o supresiÃ³n a travÃ©s del servicio de psicologÃ­a.</li>
@@ -344,13 +357,13 @@ function App() {
   const renderDemographics = () => (
     <div className="panel">
       <div className="badge">Datos previos</div>
-      <h1>Datos demogrÃ¡ficos</h1>
+      <h1>Datos demográficos</h1>
       <p className="lead">Usaremos estos datos para clasificar los resultados sin identificarte directamente.</p>
       <div className="form-grid">
         <label className="field">
           <span>Escala</span>
           <select value={scale} onChange={(e) => setScale(e.target.value as Scale)}>
-            <option value="">Selecciona una opciÃ³n</option>
+            <option value="">Selecciona una opción</option>
             <option value="oficial">Oficiales</option>
             <option value="suboficial">Suboficiales</option>
             <option value="tropa">Tropa</option>
@@ -360,10 +373,10 @@ function App() {
         <label className="field">
           <span>Destino</span>
           <select value={destination} onChange={(e) => setDestination(e.target.value)}>
-            <option value="">Selecciona una opciÃ³n</option>
+            <option value="">Selecciona una opción</option>
             <option value="control de buque">Control de buque</option>
             <option value="aprovisionamiento">Aprovisionamiento</option>
-            <option value="maquinas">MÃ¡quinas</option>
+            <option value="maquinas">Máquinas</option>
             <option value="jefatura de estudios">Jefatura de estudios</option>
             <option value="sanidad">Sanidad</option>
             <option value="alumno enm">Alumno ENM</option>
@@ -378,7 +391,15 @@ function App() {
           <input value={motherCity} onChange={(e) => setMotherCity(e.target.value)} placeholder="Ej. Bilbao" />
         </label>
         <label className="field">
-          <span>DÃ­a de nacimiento</span>
+          <span>Segundo apellido del padre</span>
+          <input value={fatherSecondSurname} onChange={(e) => setFatherSecondSurname(e.target.value)} placeholder="Ej. García" />
+        </label>
+        <label className="field">
+          <span>Segundo apellido de la madre</span>
+          <input value={motherSecondSurname} onChange={(e) => setMotherSecondSurname(e.target.value)} placeholder="Ej. López" />
+        </label>
+        <label className="field">
+          <span>Día de nacimiento</span>
           <input
             type="number"
             min="1"
@@ -388,21 +409,24 @@ function App() {
             placeholder="Ej. 07"
           />
         </label>
+        <label className="field">
+          <span>Teléfono móvil</span>
+          <input value={mobilePhone} onChange={(e) => setMobilePhone(e.target.value)} placeholder="Últimos dígitos" />
+        </label>
       </div>
       <div className="identifier">
         <span>Identificador generado</span>
         <strong>{identifier || 'Pendiente (rellena los campos)'}</strong>
-        <small>Primera letra ciudad padre + primera letra ciudad madre + dÃ­a de nacimiento (2 dÃ­gitos)</small>
+        <small>Día + últimos 3 dígitos del móvil + inicial apellido 2º padre + inicial apellido 2º madre</small>
       </div>
       <div className="actions">
-        <button onClick={() => setStage('privacy')}>AtrÃ¡s</button>
+        <button onClick={() => setStage('privacy')}>Atrás</button>
         <button className="primary" onClick={() => setStage('pss')} disabled={!demographicsValid}>
           Ir al PSS-14
         </button>
       </div>
     </div>
   )
-
   const renderQuestion = (questions: Question[], options: Option[], answers: Record<string, number | null>, index: number, onChange: (id: string, value: number) => void, onPrev: () => void, onNext: () => void, endLabel: string, showEnd: boolean) => {
     const current = questions[index]
     const value = answers[current.id]
