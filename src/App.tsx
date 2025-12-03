@@ -18,6 +18,13 @@ type Option = {
   helper?: string
 }
 
+type ManualLink = {
+  id: string
+  title: string
+  href?: string
+  note?: string
+}
+
 const pssOptions: Option[] = [
   { value: 0, label: 'Nunca' },
   { value: 1, label: 'Casi nunca' },
@@ -27,20 +34,20 @@ const pssOptions: Option[] = [
 ]
 
 const pssQuestions: Question[] = [
-  { id: 'pss1', text: 'En el último mes, ¿con qué frecuencia ha estado afectado por algo que ha ocurrido inesperadamente?' },
-  { id: 'pss2', text: 'En el último mes, ¿con qué frecuencia se ha sentido incapaz de controlar las cosas importantes en su vida?' },
-  { id: 'pss3', text: 'En el último mes, ¿con qué frecuencia se ha sentido nervioso o estresado?' },
-  { id: 'pss4', text: 'En el último mes, ¿con qué frecuencia ha manejado con éxito los pequeños problemas irritantes de la vida?' },
-  { id: 'pss5', text: 'En el último mes, ¿con qué frecuencia ha sentido que ha afrontado efectivamente los cambios importantes que han estado ocurriendo en su vida?' },
-  { id: 'pss6', text: 'En el último mes, ¿con qué frecuencia ha estado seguro sobre su capacidad para manejar sus problemas personales?' },
-  { id: 'pss7', text: 'En el último mes, ¿con qué frecuencia ha sentido que las cosas le van bien?' },
-  { id: 'pss8', text: 'En el último mes, ¿con qué frecuencia ha sentido que no podía afrontar todas las cosas que tenía que hacer?' },
-  { id: 'pss9', text: 'En el último mes, ¿con qué frecuencia ha podido controlar las dificultades de su vida?' },
-  { id: 'pss10', text: 'En el último mes, ¿con qué frecuencia se ha sentido que tenía todo bajo control?' },
-  { id: 'pss11', text: 'En el último mes, ¿con qué frecuencia ha estado enfadado porque las cosas que le han ocurrido estaban fuera de su control?' },
-  { id: 'pss12', text: 'En el último mes, ¿con qué frecuencia ha pensado sobre las cosas que le quedan por hacer?' },
-  { id: 'pss13', text: 'En el último mes, ¿con qué frecuencia ha podido controlar la forma de pasar el tiempo?' },
-  { id: 'pss14', text: 'En el último mes, ¿con qué frecuencia ha sentido que las dificultades se acumulan tanto que no puede superarlas?' },
+  { id: 'pss1', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia ha estado afectado por algo que ha ocurrido inesperadamente?' },
+  { id: 'pss2', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia se ha sentido incapaz de controlar las cosas importantes en su vida?' },
+  { id: 'pss3', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia se ha sentido nervioso o estresado?' },
+  { id: 'pss4', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia ha manejado con Ã©xito los pequeÃ±os problemas irritantes de la vida?' },
+  { id: 'pss5', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia ha sentido que ha afrontado efectivamente los cambios importantes que han estado ocurriendo en su vida?' },
+  { id: 'pss6', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia ha estado seguro sobre su capacidad para manejar sus problemas personales?' },
+  { id: 'pss7', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia ha sentido que las cosas le van bien?' },
+  { id: 'pss8', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia ha sentido que no podÃ­a afrontar todas las cosas que tenÃ­a que hacer?' },
+  { id: 'pss9', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia ha podido controlar las dificultades de su vida?' },
+  { id: 'pss10', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia se ha sentido que tenÃ­a todo bajo control?' },
+  { id: 'pss11', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia ha estado enfadado porque las cosas que le han ocurrido estaban fuera de su control?' },
+  { id: 'pss12', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia ha pensado sobre las cosas que le quedan por hacer?' },
+  { id: 'pss13', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia ha podido controlar la forma de pasar el tiempo?' },
+  { id: 'pss14', text: 'En el Ãºltimo mes, Â¿con quÃ© frecuencia ha sentido que las dificultades se acumulan tanto que no puede superarlas?' },
 ]
 
 const dassOptions: Option[] = [
@@ -51,30 +58,30 @@ const dassOptions: Option[] = [
 ]
 
 const dassQuestions: Question[] = [
-  { id: 'dass1', text: 'Me costó mucho relajarme' },
-  { id: 'dass2', text: 'Me di cuenta de que tenía la boca seca' },
-  { id: 'dass3', text: 'No podía sentir ningún sentimiento positivo' },
-  { id: 'dass4', text: 'Se me hizo difícil respirar' },
-  { id: 'dass5', text: 'Se me hizo difícil tomar la iniciativa para hacer cosas' },
-  { id: 'dass6', text: 'Reaccioné exageradamente en ciertas situaciones' },
-  { id: 'dass7', text: 'Sentí que mis manos temblaban' },
-  { id: 'dass8', text: 'Sentí que tenía muchos nervios' },
-  { id: 'dass9', text: 'Estaba preocupado por situaciones en las cuales podía tener pánico o en las que podría hacer el ridículo' },
-  { id: 'dass10', text: 'Sentí que no tenía nada por que vivir' },
-  { id: 'dass11', text: 'Noté que me agitaba' },
-  { id: 'dass12', text: 'Se me hizo difícil relajarme' },
-  { id: 'dass13', text: 'Me sentí triste y deprimido' },
-  { id: 'dass14', text: 'No toleré nada que no me permitiera continuar con lo que estaba haciendo' },
-  { id: 'dass15', text: 'Sentí que estaba a punto de sufrir un ataque de pánico' },
-  { id: 'dass16', text: 'No me pude entusiasmar por nada' },
-  { id: 'dass17', text: 'Sentí que valía muy poco como persona' },
-  { id: 'dass18', text: 'Sentí que estaba muy irritable' },
-  { id: 'dass19', text: 'Sentí los latidos de mi corazón a pesar de no haber hecho ningún esfuerzo físico' },
-  { id: 'dass20', text: 'Tuve miedo sin razón' },
-  { id: 'dass21', text: 'Sentí que la vida no tenía ningún sentido' },
-]
+  { id: 'dass1', text: 'En el último mes, me costó mucho relajarme' },
+  { id: 'dass2', text: 'En el último mes, me di cuenta de que tenía la boca seca' },
+  { id: 'dass3', text: 'En el último mes, no podía sentir ningún sentimiento positivo' },
+  { id: 'dass4', text: 'En el último mes, se me hizo difícil respirar' },
+  { id: 'dass5', text: 'En el último mes, se me hizo difícil tomar la iniciativa para hacer cosas' },
+  { id: 'dass6', text: 'En el último mes, reaccioné exageradamente en ciertas situaciones' },
+  { id: 'dass7', text: 'En el último mes, sentí que mis manos temblaban' },
+  { id: 'dass8', text: 'En el último mes, sentí que tenía muchos nervios' },
+  { id: 'dass9', text: 'En el último mes, estaba preocupado por situaciones en las cuales podía tener pánico o en las que podría hacer el ridículo' },
+  { id: 'dass10', text: 'En el último mes, sentí que no tenía nada por lo que vivir' },
+  { id: 'dass11', text: 'En el último mes, noté que me agitaba' },
+  { id: 'dass12', text: 'En el último mes, se me hizo difícil relajarme' },
+  { id: 'dass13', text: 'En el último mes, me sentí triste y deprimido' },
+  { id: 'dass14', text: 'En el último mes, no toleré nada que no me permitiera continuar con lo que estaba haciendo' },
+  { id: 'dass15', text: 'En el último mes, sentí que estaba a punto de sufrir un ataque de pánico' },
+  { id: 'dass16', text: 'En el último mes, no me pude entusiasmar por nada' },
+  { id: 'dass17', text: 'En el último mes, sentí que valía muy poco como persona' },
+  { id: 'dass18', text: 'En el último mes, sentí que estaba muy irritable' },
+  { id: 'dass19', text: 'En el último mes, sentí los latidos de mi corazón a pesar de no haber hecho ningún esfuerzo físico' },
+  { id: 'dass20', text: 'En el último mes, tuve miedo sin razón' },
+  { id: 'dass21', text: 'En el último mes, sentí que la vida no tenía ningún sentido' },
+] as const
 
-const manualLinks = [
+const manualLinks: ManualLink[] = [
   { id: 'general', title: 'Manual General', href: '', note: 'Disponible próximamente' },
   { id: 'breve', title: 'Manual Breve', href: 'https://github.com/uveral/elcano/releases/download/manual/Breve.pdf' },
   { id: 'parejas', title: 'Manual Parejas', href: 'https://github.com/uveral/elcano/releases/download/manual/Parejas.pdf' },
@@ -213,7 +220,7 @@ function App() {
 
     if (!supabaseReady) {
       setSubmitError(
-        'Configura las variables de conexión (URL y clave) para poder enviar los datos.',
+        'Configura las variables de conexiÃ³n (URL y clave) para poder enviar los datos.',
       )
       return
     }
@@ -253,17 +260,17 @@ function App() {
   const renderPrivacy = () => (
     <div className="panel">
       <div className="badge">Aviso de privacidad</div>
-      <h1>Protección de datos</h1>
+      <h1>ProtecciÃ³n de datos</h1>
       <p className="lead">
-        Tus respuestas son confidenciales y se emplearán únicamente para fines de investigación y mejora operativa, con base jurídica en tu consentimiento.
+        Tus respuestas son confidenciales y se emplearÃ¡n Ãºnicamente para fines de investigaciÃ³n y mejora operativa, con base jurÃ­dica en tu consentimiento.
       </p>
       <ul className="list">
-        <li>Cumplimiento RGPD/Ley Orgánica de Protección de Datos: no se recogen datos identificativos directos.</li>
-        <li>Identificación seudónima: se genera un identificador (iniciales ciudades progenitores + día de nacimiento).</li>
-        <li>Transmisión segura: las respuestas viajan cifradas vía HTTPS/SSL hacia una base de datos segura y cifrada.</li>
-        <li>Acceso restringido: solo personal autorizado del servicio de psicología puede consultar estos datos.</li>
-        <li>Derechos: puedes solicitar acceso, rectificación o supresión a través del servicio de psicología.</li>
-        <li>Puedes abandonar el cuestionario en cualquier momento; los resultados se guardarán inicialmente como borrador.</li>
+        <li>Cumplimiento RGPD/Ley OrgÃ¡nica de ProtecciÃ³n de Datos: no se recogen datos identificativos directos.</li>
+        <li>IdentificaciÃ³n seudÃ³nima: se genera un identificador (iniciales ciudades progenitores + dÃ­a de nacimiento).</li>
+        <li>TransmisiÃ³n segura: las respuestas viajan cifradas vÃ­a HTTPS/SSL hacia una base de datos segura y cifrada.</li>
+        <li>Acceso restringido: solo personal autorizado del servicio de psicologÃ­a puede consultar estos datos.</li>
+        <li>Derechos: puedes solicitar acceso, rectificaciÃ³n o supresiÃ³n a travÃ©s del servicio de psicologÃ­a.</li>
+        <li>Puedes abandonar el cuestionario en cualquier momento; los resultados se guardarÃ¡n inicialmente como borrador.</li>
       </ul>
       <div className="manuals">
         <span>Descarga de manuales en PDF:</span>
@@ -303,13 +310,13 @@ function App() {
   const renderDemographics = () => (
     <div className="panel">
       <div className="badge">Datos previos</div>
-      <h1>Datos demográficos</h1>
+      <h1>Datos demogrÃ¡ficos</h1>
       <p className="lead">Usaremos estos datos para clasificar los resultados sin identificarte directamente.</p>
       <div className="form-grid">
         <label className="field">
           <span>Escala</span>
           <select value={scale} onChange={(e) => setScale(e.target.value as Scale)}>
-            <option value="">Selecciona una opción</option>
+            <option value="">Selecciona una opciÃ³n</option>
             <option value="oficial">Oficiales</option>
             <option value="suboficial">Suboficiales</option>
             <option value="tropa">Tropa</option>
@@ -319,10 +326,10 @@ function App() {
         <label className="field">
           <span>Destino</span>
           <select value={destination} onChange={(e) => setDestination(e.target.value)}>
-            <option value="">Selecciona una opción</option>
+            <option value="">Selecciona una opciÃ³n</option>
             <option value="control de buque">Control de buque</option>
             <option value="aprovisionamiento">Aprovisionamiento</option>
-            <option value="maquinas">Máquinas</option>
+            <option value="maquinas">MÃ¡quinas</option>
             <option value="jefatura de estudios">Jefatura de estudios</option>
             <option value="sanidad">Sanidad</option>
             <option value="alumno enm">Alumno ENM</option>
@@ -337,7 +344,7 @@ function App() {
           <input value={motherCity} onChange={(e) => setMotherCity(e.target.value)} placeholder="Ej. Bilbao" />
         </label>
         <label className="field">
-          <span>Día de nacimiento</span>
+          <span>DÃ­a de nacimiento</span>
           <input
             type="number"
             min="1"
@@ -351,10 +358,10 @@ function App() {
       <div className="identifier">
         <span>Identificador generado</span>
         <strong>{identifier || 'Pendiente (rellena los campos)'}</strong>
-        <small>Primera letra ciudad padre + primera letra ciudad madre + día de nacimiento (2 dígitos)</small>
+        <small>Primera letra ciudad padre + primera letra ciudad madre + dÃ­a de nacimiento (2 dÃ­gitos)</small>
       </div>
       <div className="actions">
-        <button onClick={() => setStage('privacy')}>Atrás</button>
+        <button onClick={() => setStage('privacy')}>AtrÃ¡s</button>
         <button className="primary" onClick={() => setStage('pss')} disabled={!demographicsValid}>
           Ir al PSS-14
         </button>
@@ -462,7 +469,7 @@ function App() {
     <div className="panel">
       <div className="badge">Resumen</div>
       <h1>Listo para enviar</h1>
-      <p className="lead">Revisa que todas las preguntas estén respondidas. Al enviar, los datos se guardarán como borrador.</p>
+      <p className="lead">Revisa que todas las preguntas estÃ©n respondidas. Al enviar, los datos se guardarÃ¡n como borrador.</p>
       <div className="summary">
         <div>
           <span>Escala:</span>
@@ -482,7 +489,7 @@ function App() {
         </div>
         <div>
           <span>Solicitud de contacto:</span>
-          <strong>{contactOptIn ? 'Sí' : 'No'}</strong>
+          <strong>{contactOptIn ? 'SÃ­' : 'No'}</strong>
         </div>
         <div>
           <span>DASS-21 contestadas:</span>
@@ -492,7 +499,7 @@ function App() {
       <div className="contact-block">
         <label className="checkbox">
           <input type="checkbox" checked={contactOptIn} onChange={(e) => setContactOptIn(e.target.checked)} />
-          <span>Quiero que el servicio de psicología me contacte</span>
+          <span>Quiero que el servicio de psicologÃ­a me contacte</span>
         </label>
         {contactOptIn && (
           <div className="form-grid">
@@ -501,24 +508,24 @@ function App() {
               <input value={contactName} onChange={(e) => setContactName(e.target.value)} placeholder="Nombre y apellidos" />
             </label>
             <label className="field">
-              <span>Teléfono</span>
+              <span>TelÃ©fono</span>
               <input value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} placeholder="Ej. +34 600 000 000" />
             </label>
             <label className="field">
-              <span>Correo electrónico</span>
+              <span>Correo electrÃ³nico</span>
               <input type="email" value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} placeholder="correo@ejemplo.com" />
             </label>
           </div>
         )}
         {contactOptIn && !contactValid && <p className="warning">Introduce al menos un dato de contacto.</p>}
       </div>
-      {!supabaseReady && <p className="warning">Configura las variables de entorno para habilitar el envío a Supabase.</p>}
+      {!supabaseReady && <p className="warning">Configura las variables de entorno para habilitar el envÃ­o.</p>}
       {submitError && <p className="error">{submitError}</p>}
       {submitOk && <p className="success">Respuestas guardadas como borrador.</p>}
       <div className="actions">
         <button onClick={() => setStage('dass')}>Volver</button>
         <button className="primary" onClick={handleSubmit} disabled={!allPssAnswered || !allDassAnswered || submitting || !contactValid}>
-          {submitting ? 'Enviando...' : 'Enviar a Supabase'}
+          {submitting ? 'Enviando...' : 'Enviar cuestionario'}
         </button>
       </div>
     </div>
@@ -559,9 +566,9 @@ function App() {
     <div className="app">
       <header className="topbar">
         <div className="brand">
-          <img src={logo} alt="Armada Española" className="brand-logo" />
+          <img src={logo} alt="Armada EspaÃ±ola" className="brand-logo" />
           <div>
-            <strong>B.E. Juan Sebastián ElCano</strong>
+            <strong>B.E. Juan SebastiÃ¡n ElCano</strong>
           </div>
         </div>
       </header>
