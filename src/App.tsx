@@ -272,13 +272,18 @@ function App() {
             <a
               key={manual.id}
               href={manual.href || '#'}
-              className={!manual.href ? 'disabled' : ''}
+              className={`manual-card ${!manual.href ? 'disabled' : ''}`}
               download={Boolean(manual.href)}
               target={manual.href ? '_blank' : undefined}
               rel="noreferrer"
             >
-              {manual.title}
-              {!manual.href && <small> — {manual.note}</small>}
+              <div className="manual-thumb">
+                <img src={logo} alt={manual.title} />
+              </div>
+              <div className="manual-info">
+                <span>{manual.title}</span>
+                {!manual.href && <small>{manual.note}</small>}
+              </div>
             </a>
           ))}
         </div>
@@ -529,13 +534,18 @@ function App() {
             <a
               key={manual.id}
               href={manual.href || '#'}
-              className={!manual.href ? 'disabled' : ''}
+              className={`manual-card ${!manual.href ? 'disabled' : ''}`}
               download={Boolean(manual.href)}
               target={manual.href ? '_blank' : undefined}
               rel="noreferrer"
             >
-              {manual.title}
-              {!manual.href && <small> — {manual.note}</small>}
+              <div className="manual-thumb">
+                <img src={logo} alt={manual.title} />
+              </div>
+              <div className="manual-info">
+                <span>{manual.title}</span>
+                {!manual.href && <small>{manual.note}</small>}
+              </div>
             </a>
           ))}
         </div>
