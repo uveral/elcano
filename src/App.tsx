@@ -244,9 +244,12 @@ function App() {
         almacenarán de forma seudonimizada en Supabase (entorno seguro) y solo personal autorizado podrá acceder a ellas.
       </p>
       <ul className="list">
-        <li>No se recogen datos personales directos; solo identificador generado.</li>
-        <li>Puedes abandonar el cuestionario en cualquier momento.</li>
-        <li>Los resultados se guardarán inicialmente como borrador.</li>
+        <li>Cumplimiento RGPD/Ley Orgánica de Protección de Datos: no se recogen datos identificativos directos.</li>
+        <li>Identificación seudónima: se genera un identificador (iniciales ciudades progenitores + día de nacimiento).</li>
+        <li>Transmisión segura: las respuestas viajan cifradas vía HTTPS/SSL hacia una base de datos cifrada en Supabase.</li>
+        <li>Acceso restringido: solo personal autorizado del servicio de psicología puede consultar estos datos.</li>
+        <li>Derechos: puedes solicitar acceso, rectificación o supresión a través del servicio de psicología.</li>
+        <li>Puedes abandonar el cuestionario en cualquier momento; los resultados se guardarán inicialmente como borrador.</li>
       </ul>
       <label className="checkbox">
         <input type="checkbox" checked={consentAccepted} onChange={(e) => setConsentAccepted(e.target.checked)} />
