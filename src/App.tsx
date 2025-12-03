@@ -556,10 +556,10 @@ const handleSubmit = async () => {
     <div className="panel">
       <div className="badge">Enviado</div>
       <h1>Gracias por tu tiempo</h1>
-      <p className="lead">Tus respuestas se han guardado como borrador. Puedes cerrar esta ventana con seguridad.</p>
+      <p className="lead">Tus respuestas se han guardado con éxito. Puedes cerrar esta ventana con seguridad.</p>
       <div className="manuals">
         <span>Manual de apoyo (PDF):</span>
-        <div className="manual-links">
+        <div className="manual-links large">
           {manualLinks.map((manual) => (
             <ManualCard key={manual.id} manual={manual} />
           ))}

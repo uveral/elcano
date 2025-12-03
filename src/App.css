@@ -299,6 +299,10 @@ button:disabled {
   gap: 12px;
 }
 
+.manual-links.large {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
 .manual-card {
   display: flex;
   align-items: center;
@@ -326,8 +330,8 @@ button:disabled {
 }
 
 .manual-thumb {
-  width: 92px;
-  height: 120px;
+  width: 120px;
+  height: 150px;
   border-radius: 8px;
   overflow: hidden;
   background: rgba(23, 55, 99, 0.08);
