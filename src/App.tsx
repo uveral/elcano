@@ -327,12 +327,12 @@ function App() {
         Tus respuestas son confidenciales y se emplearÃ¡n Ãºnicamente para fines de investigaciÃ³n y mejora operativa, con base jurÃ­dica en tu consentimiento.
       </p>
       <ul className="list">
-        <li>Cumplimiento RGPD/Ley OrgÃ¡nica de ProtecciÃ³n de Datos: no se recogen datos identificativos directos.</li>
-        <li>Identificación seudónima: se genera un identificador (día + últimos 3 dígitos del móvil + inicial segundo apellido padre y madre).</li>
-        <li>TransmisiÃ³n segura: las respuestas viajan cifradas vÃ­a HTTPS/SSL hacia una base de datos segura y cifrada.</li>
-        <li>Acceso restringido: solo personal autorizado del servicio de psicologÃ­a puede consultar estos datos.</li>
-        <li>Derechos: puedes solicitar acceso, rectificaciÃ³n o supresiÃ³n a travÃ©s del servicio de psicologÃ­a.</li>
-        <li>Puedes abandonar el cuestionario en cualquier momento; los resultados se guardarÃ¡n inicialmente como borrador.</li>
+        <li>Cumplimiento RGPD/Ley Orgánica de Protección de Datos: no se recogen datos identificativos directos.</li>
+        <li>Identificación seudónima: se genera un identificador (día + últimos 3 dígitos del móvil + inicial segundo apellido del padre y de la madre).</li>
+        <li>Transmisión segura: las respuestas viajan cifradas vía HTTPS/SSL hacia una base de datos segura y cifrada.</li>
+        <li>Acceso restringido: solo personal autorizado del servicio de psicología puede consultar estos datos.</li>
+        <li>Derechos: puedes solicitar acceso, rectificación o supresión a través del servicio de psicología.</li>
+        <li>Puedes abandonar el cuestionario en cualquier momento; los resultados se guardarán inicialmente como borrador.</li>
       </ul>
       <div className="manuals">
         <span>Descarga de manuales en PDF:</span>
